@@ -1,0 +1,48 @@
+i want a local LLM (QWEN model - suitable for 8GB GPU) to be deployed.
+this LLM will implement a RAG system to respond to the emails and be available for the chatting as a chatbot on the website.
+this all should be done via APIs i.e. a string (whether email or a chat) to be sent to the model and model responds.
+there must be two routes 1) for email 2) for chat.
+
+the email route:
+first a summary of the email to be extracted (about 100 words max). this will summarize the list of questions user have asked.
+the email text could range from a few words to 300,000 words, so the summarizer can split the email in chunks.
+the list of questions we want to extract must be configurable via a yml file called "llm_configs.yml".
+llm_configs.yml can look like:
+{
+    "extract_topics": [
+        "company information",
+        "booking request",
+        "payment information",
+    ],
+    "env" : [
+        "active" : "dev"
+        "type" : [{
+            "dev": {
+                "model" : "qwen-xxxxxxxx" #a small llm model for testing , responses
+            },
+            "prod" : {
+                "model" : "qwen-xxxxxxxx" #a small llm model for production
+            }
+
+        }]
+    ]
+}
+
+topics that are not related to these allowed extract_topics must be refused.
+
+
+the folder stucture should also contain a folder called "llm_readable_resources" (or a suggest a better / shorter name) that will contain documents such as pdfs, docs, excel files (xlsx, xls,csv etc), everytime a document is uploaded or modified, that specific documents' features are reextracted and saved in the database. use mysql database for extracting and storing vectors (we will also use this database for other web related datastorage so ensure that llm related tables have "llm_" as the prefix).
+
+when server is executed first time, download the model mentioned in the yml file. 
+i want to be able to run the server using one single file called "run_server.py". if the env is prod, spin the server with recommended settings.
+
+create a requirements.txt file to create a conda env. when run_server.py is executed, it should automatically create the conda env (if not exists automatically) + installs the requirements.txt and downloads the model specified in the yml file and then runs the server. user must set the active env in the yml to either dev or prod and the model should be downloaded accordingly and env should be created accordingly. conda env should also have prefix "dev_..." and "prod_..." for development and production environments accordingly.
+
+ensure proper logging for dev and prod. logs should be saved in txt file and not in the database.
+
+LLM Personality:
+the purpose of the LLM is to act like an assistant that will respond to customer queries (defined in the yml extract_topics). It should be strict and precise.
+
+
+
+For the first development round, we have the above requirements. We will first cater these requirements and i will tell you what to do in the next prompt.

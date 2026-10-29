@@ -1,0 +1,71 @@
+env:
+  active: dev
+  profiles:
+    dev:
+      provider: local_qwen
+      backend: ollama
+      model: qwen2.5:7b
+      embedding_model: BAAI/bge-small-en-v1.5
+    prod:
+      provider: local_qwen
+      backend: transformers
+      model: Qwen/Qwen2.5-7B-Instruct
+      embedding_model: BAAI/bge-small-en-v1.5
+providers:
+  local_qwen:
+    device: auto
+    quantization: int4
+    max_memory_gb: 8
+    context_window: 8192
+  ollama:
+    base_url: http://127.0.0.1:11434
+  openai:
+    api_key_env: OPENAI_API_KEY
+    base_url: https://api.openai.com/v1
+  anthropic:
+    api_key_env: ANTHROPIC_API_KEY
+    base_url: https://api.anthropic.com
+  google:
+    api_key_env: GOOGLE_API_KEY
+  mistral:
+    api_key_env: MISTRAL_API_KEY
+  cohere:
+    api_key_env: COHERE_API_KEY
+  azure_openai:
+    api_key_env: AZURE_OPENAI_API_KEY
+    endpoint_env: AZURE_OPENAI_ENDPOINT
+    api_version: '2024-10-21'
+  groq:
+    api_key_env: GROQ_API_KEY
+  together:
+    api_key_env: TOGETHER_API_KEY
+  xai:
+    api_key_env: XAI_API_KEY
+generation:
+  temperature: 0.4
+  max_output_tokens: 256
+  timeout_seconds: 180
+  retries: 2
+extract_topics:
+- company information
+- booking request
+- payment information
+rag:
+  chunk_size_tokens: 512
+  chunk_overlap_tokens: 64
+  top_k: 3
+  min_similarity: 0.25
+email:
+  max_summary_words: 100
+  chunk_size_words: 4000
+chat:
+  session_turns: 6
+server:
+  host: 127.0.0.1
+  port: 8000
+database:
+  host: localhost
+  port: 3306
+  name: advantage_removals
+  user: advantage_ai_app
+  password_env: MYSQL_PASSWORD

@@ -1,0 +1,40 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Git and OS files
+.git/
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Backup and temporary files
+*.bak
+*.backup*
+*.before-*
+*.old
+*.tmp
+
+# Model weights and databases
+*.gguf
+*.safetensors
+*.pt
+*.pth
+*.bin
+*.sqlite3
+*.db
+*.sql
+
+# Node dependencies
+node_modules/
